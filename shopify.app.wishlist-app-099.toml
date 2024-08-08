@@ -1,0 +1,29 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "e3e114be5bb1ef82497b6eea83b2f5b6"
+name = "wishlist-app-099"
+handle = "wishlist-app-099"
+application_url = "https://telecom-bachelor-court-demonstrated.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "cofaria-01.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = ""
+
+[auth]
+redirect_urls = [
+  "https://telecom-bachelor-court-demonstrated.trycloudflare.com/auth/callback",
+  "https://telecom-bachelor-court-demonstrated.trycloudflare.com/auth/shopify/callback",
+  "https://telecom-bachelor-court-demonstrated.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-07"
+
+[pos]
+embedded = false
