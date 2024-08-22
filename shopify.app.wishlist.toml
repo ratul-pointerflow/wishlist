@@ -1,14 +1,14 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "3310953cca1241496771620a0e75969f"
-name = "Wishlist"
-handle = "wishlist-486"
+client_id = "13f3c2657b60a8e62026079ead8a0751"
+name = "wishlist"
+handle = "wishlist-533"
 application_url = "https://wishlist-oehk.onrender.com"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = "coffaia.myshopify.com"
+dev_store_url = "appcarto.myshopify.com"
 include_config_on_deploy = true
 
 [access_scopes]
@@ -23,7 +23,7 @@ redirect_urls = [
 ]
 
 [webhooks]
-api_version = "2024-04"
+api_version = "2024-07"
 
 [pos]
 embedded = false
