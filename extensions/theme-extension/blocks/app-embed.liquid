@@ -156,7 +156,7 @@
     right: 0;
   }
 
-  wish-list-cart .modal_inner .modal_content{
+  wish-list-cart .modal_inner .modal_content {
     overflow-y: scroll;
     height: calc(100vh - 60px);
   }
@@ -192,8 +192,8 @@
     margin-bottom: 10px;
   }
 
-  .wish_list_product ,
-  .wish_list_product  *{
+  .wish_list_product,
+  .wish_list_product * {
     text-decoration: none;
   }
 
@@ -263,11 +263,11 @@
 </style>
 
 <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
- 
+
 <script>
   window.addEventListener("load", (event) => {
     document.querySelector('wish-list-cart').addEventListener("click", function (event) {
-      if(event.target === this){
+      if (event.target === this) {
         closeCart();
       }
     });
@@ -284,60 +284,61 @@
     modal.removeAttribute('open');
   }
 
-  function deleteFromWishlist(productId, productHandle, customerId, shop, baseUrl){
-      const button = document.querySelector('wish-list-button');
-      var productFormdata = new FormData();
-      productFormdata.append("productId", productId);
-      productFormdata.append("productHandle", productHandle);
-      productFormdata.append("customerId", customerId);
-      productFormdata.append("shop", shop);
+  function deleteFromWishlist(productId, productHandle, customerId, shop, baseUrl) {
+    const button = document.querySelector('wish-list-button');
+    var productFormdata = new FormData();
+    productFormdata.append("productId", productId);
+    productFormdata.append("productHandle", productHandle);
+    productFormdata.append("customerId", customerId);
+    productFormdata.append("shop", shop);
 
-      axios({
-          method: 'delete',
-          url: baseUrl + "/api/wishlists",
-          data: productFormdata
-      }).then((value) => {
-        updateCart();
-        if(button){
-          isAdded();
-        }
-      });
-      
-      async function isAdded() {
-        const params = `productId=${productId}&productHandle=${productHandle}&customerId=${customerId}&shop=${shop}`;
-        try {
-            const response = await axios.get(baseUrl + "/api/wishlists?" + params);
+    axios({
+      method: 'delete',
+      url: baseUrl + "/api/wishlists",
+      data: productFormdata
+    }).then((value) => {
+      updateCart();
+      if (button) {
+        isAdded();
+      }
+    });
 
-            if(response.data.data.length){
-                button.classList.add('added');
-            } else {
-                button.classList.remove('added');
-            }
-        } catch (error) {
-            console.error(error);
+    async function isAdded() {
+      const params = `productId=${productId}&productHandle=${productHandle}&customerId=${customerId}&shop=${shop}`;
+      try {
+        const response = await axios.get(baseUrl + "/api/wishlists?" + params);
+
+        if (response.data.data.length) {
+          button.classList.add('added');
+        } else {
+          button.classList.remove('added');
         }
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
-  async function updateCart(){
-    const baseUrl = "https://speak-coastal-menus-extra.trycloudflare.com";
+  async function updateCart() {
+    const baseUrl = "https://wishlist-oehk.onrender.com";
     const productList = document.querySelector('product-list');
 
     {% if customer %}
 
     // get all products
-    const customerId = {{ customer.id }};
-    const shop = "{{ shop.permanent_domain }}";
+    const customerId = {{ customer.id }
+  };
+  const shop = "{{ shop.permanent_domain }}";
 
-    const params = `customerId=${customerId}&shop=${shop}`;
-    try {
-        const response = await axios.get(baseUrl + "/api/wishlists?" + params);
-        const products = response.data.data;
+  const params = `customerId=${customerId}&shop=${shop}`;
+  try {
+    const response = await axios.get(baseUrl + "/api/wishlists?" + params);
+    const products = response.data.data;
 
-        productList.innerHTML = "";
-        products.forEach((crntProduct) => {
-          let product = JSON.parse(crntProduct.product);
-          let productElm = `<a href="${product.url}" class="wish_list_product">
+    productList.innerHTML = "";
+    products.forEach((crntProduct) => {
+      let product = JSON.parse(crntProduct.product);
+      let productElm = `<a href="${product.url}" class="wish_list_product">
               <div class="left_box">
                   <div class="imgbox_full">
                       <img src='${product.featured_image}' alt='' width='' height=''>
@@ -365,16 +366,16 @@
           </a>`;
 
 
-          let node = document.createElement('div');
-          node.innerHTML = productElm;
-          let newElement = node.firstChild;
-          productList.appendChild(newElement);
-        })
-    } catch (error) {
-        console.error(error);
-    }
+      let node = document.createElement('div');
+      node.innerHTML = productElm;
+      let newElement = node.firstChild;
+      productList.appendChild(newElement);
+    })
+  } catch (error) {
+    console.error(error);
+  }
 
-    {% endif %}
+  {% endif %}
   }
 </script>
 {% schema %}
