@@ -84,23 +84,21 @@
 <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-    window.addEventListener("load", (event) => {
-        const button = document.querySelector('wish-list-button');
-        const baseUrl = "https://wishlist-oehk.onrender.com";
+window.addEventListener("load", (event) => {
+    const button = document.querySelector('wish-list-button');
+    const baseUrl = "https://wishlist-oehk.onrender.com";
 
+    {% if customer %}
 
-        {% if customer %}
+    // get all data
+    const productObj = {
+        url: "{{ product.url }}",
+        title: "{{ product.title }}",
+        price: "{{ product.price |  money_with_currency }}",
+        featured_image: "{{ product.featured_image | img_url: 'master'  }}",
+    }
 
-        // get all data
-        const productObj = {
-            url: "{{ product.url }}",
-            title: "{{ product.title }}",
-            price: "{{ product.price |  money_with_currency }}",
-            featured_image: "{{ product.featured_image | img_url: 'master'  }}",
-        }
-
-        const productId = {{ product.id }
-    };
+    const productId = {{ product.id }};
     const productHandle = "{{ product.handle }}";
     const product = JSON.stringify(productObj);
     const customerId = {{ customer.id }};
@@ -116,8 +114,8 @@
     isAdded();
 
     // handle add and delete req
-    button.addEventListener('click', function () {
-        if (button.classList.contains('added')) {
+    button.addEventListener('click', function(){
+        if(button.classList.contains('added')){
             axios({
                 method: 'delete',
                 url: baseUrl + "/api/wishlists",
@@ -134,7 +132,7 @@
             })
             button.classList.add('added');
 
-
+            
         }
     });
 
@@ -143,7 +141,7 @@
         try {
             const response = await axios.get(baseUrl + "/api/wishlists?" + params);
 
-            if (response.data.data.length) {
+            if(response.data.data.length){
                 button.classList.add('added');
             } else {
                 button.classList.remove('added');
@@ -159,8 +157,8 @@
 
 {% schema %}
 {
-"name": "Add to wishlist",
-"target": "section",
-"settings": []
+    "name": "Add to wishlist",
+    "target": "section",
+    "settings": []
 }
 {% endschema %}
