@@ -1,0 +1,386 @@
+<button is="wishlist-opener" onclick="openCart()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+    <path
+      d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z">
+    </path>
+  </svg>
+</button>
+
+<wish-list-cart>
+  <div class="modal_inner">
+    <div class="modal_topbar">
+      <h2 class="title">Wishlist</h2>
+
+      <button class="close" onclick="closeCart()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          style="fill: rgba(0, 0, 0, 1);">
+          <path
+            d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z">
+          </path>
+        </svg>
+      </button>
+    </div>
+    <div class="modal_content">
+      <product-list></product-list>
+    </div>
+  </div>
+</wish-list-cart>
+
+
+
+<style>
+  button[is="wishlist-opener"] {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #000000;
+    border-radius: 6px 0px 0px 6px;
+  }
+
+  button[is="wishlist-opener"] svg {
+    width: 100%;
+    height: 100%;
+    fill: #fff !important;
+  }
+
+  button[is="wishlist-opener"],
+  button[is="wishlist-opener"] * {
+    cursor: pointer;
+  }
+
+  button[is="wishlist-opener"] .count {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  canvas:empty {
+    display: initial;
+  }
+
+  wish-list-cart {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background-color: #00000040;
+    z-index: 9999999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 100ms;
+  }
+
+  wish-list-cart::-webkit-scrollbar,
+  wish-list-cart *::-webkit-scrollbar {
+    display: none;
+  }
+
+  wish-list-cart .modal_inner {
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    padding: 10px 10px 10px 20px;
+    background-color: #FFFFFF;
+    border-radius: 6px 0 0 6px;
+    transition: all linear 350ms;
+    position: absolute;
+    top: 0;
+    right: -100%;
+  }
+
+  wish-list-cart .modal_inner .modal_topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  wish-list-cart .modal_inner .modal_topbar .title {
+    font-size: 18px;
+    font-weight: 700px;
+    margin: 0;
+  }
+
+  wish-list-cart .modal_inner .modal_topbar .close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+  }
+
+  wish-list-cart .modal_inner .modal_topbar .close,
+  wish-list-cart .modal_inner .modal_topbar .close * {
+    cursor: pointer;
+  }
+
+  wish-list-cart .modal_inner .modal_topbar .close:hover {
+    background-color: #00000030;
+  }
+
+  wish-list-cart .modal_inner .modal_topbar .close svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  wish-list-cart[open] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  wish-list-cart[open] .modal_inner {
+    right: 0;
+  }
+
+  wish-list-cart .modal_inner .modal_content{
+    overflow-y: scroll;
+    height: calc(100vh - 60px);
+  }
+
+  /* product snippets */
+  .imgbox_full,
+  .imgbox {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .imgbox_full img,
+  .imgbox img {
+    width: 100%;
+    height: auto;
+  }
+
+  .imgbox_full {
+    height: 100%;
+  }
+
+  .imgbox_full img {
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+
+  .wish_list_product {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .wish_list_product ,
+  .wish_list_product  *{
+    text-decoration: none;
+  }
+
+  .wish_list_product .left_box {
+    width: 30%;
+    aspect-ratio: 1/1;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .wish_list_product .center_box {
+    width: calc(50% - 10px);
+  }
+
+  .wish_list_product .center_box .title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    margin: 0 5px 0 0;
+  }
+
+  .wish_list_product .center_box .price {
+    font-size: 14px;
+    font-weight: 300;
+    color: #00000050;
+    margin: 0;
+  }
+
+  .wish_list_product .right_box {
+    width: 20%;
+  }
+
+  .wish_list_product .right_box .button_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    row-gap: 10px;
+  }
+
+  .wish_list_product .right_box button {
+    background-color: transparent;
+    border: none;
+    width: 30px;
+    height: 30px;
+    color: #000;
+    padding: 6px;
+    border-radius: 6px;
+    background-color: transparent;
+    transition: all 250ms;
+  }
+
+  .wish_list_product .right_box button:hover {
+    background-color: #00000050;
+  }
+
+  .wish_list_product .right_box button svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .wish_list_product .right_box button,
+  .wish_list_product .right_box button * {
+    cursor: pointer;
+  }
+</style>
+
+<script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+ 
+<script>
+  window.addEventListener("load", (event) => {
+    document.querySelector('wish-list-cart').addEventListener("click", function (event) {
+      if(event.target === this){
+        closeCart();
+      }
+    });
+  });
+  function openCart() {
+    let modal = document.querySelector('wish-list-cart');
+    modal.setAttribute('open', 'true');
+
+    updateCart();
+  }
+
+  function closeCart() {
+    let modal = document.querySelector('wish-list-cart');
+    modal.removeAttribute('open');
+  }
+
+  function deleteFromWishlist(productId, productHandle, customerId, shop, baseUrl){
+      const button = document.querySelector('wish-list-button');
+      var productFormdata = new FormData();
+      productFormdata.append("productId", productId);
+      productFormdata.append("productHandle", productHandle);
+      productFormdata.append("customerId", customerId);
+      productFormdata.append("shop", shop);
+
+      axios({
+          method: 'delete',
+          url: baseUrl + "/api/wishlists",
+          data: productFormdata
+      }).then((value) => {
+        updateCart();
+        if(button){
+          isAdded();
+        }
+      });
+      
+      async function isAdded() {
+        const params = `productId=${productId}&productHandle=${productHandle}&customerId=${customerId}&shop=${shop}`;
+        try {
+            const response = await axios.get(baseUrl + "/api/wishlists?" + params);
+
+            if(response.data.data.length){
+                button.classList.add('added');
+            } else {
+                button.classList.remove('added');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+  }
+
+  async function updateCart(){
+    const baseUrl = "https://speak-coastal-menus-extra.trycloudflare.com";
+    const productList = document.querySelector('product-list');
+
+    {% if customer %}
+
+    // get all products
+    const customerId = {{ customer.id }};
+    const shop = "{{ shop.permanent_domain }}";
+
+    const params = `customerId=${customerId}&shop=${shop}`;
+    try {
+        const response = await axios.get(baseUrl + "/api/wishlists?" + params);
+        const products = response.data.data;
+
+        productList.innerHTML = "";
+        products.forEach((crntProduct) => {
+          let product = JSON.parse(crntProduct.product);
+          let productElm = `<a href="${product.url}" class="wish_list_product">
+              <div class="left_box">
+                  <div class="imgbox_full">
+                      <img src='${product.featured_image}' alt='' width='' height=''>
+                  </div>
+              </div>
+
+              <div class="center_box">
+                  <h2 class="title">${product.title}</h2>
+                  <p class="price">${product.price}</p>
+              </div>
+
+              <div class="right_box">
+                  <div class="button_box">
+                      <button class="remove" onclick="deleteFromWishlist('${crntProduct.productId}', '${crntProduct.productHandle}', '${crntProduct.customerId}', '${crntProduct.shop}', '${baseUrl}')">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                              viewBox="0 0 16 16">
+                              <path
+                                  d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                              <path
+                                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                          </svg>
+                      </button>
+                  </div>
+              </div>
+          </a>`;
+
+
+          let node = document.createElement('div');
+          node.innerHTML = productElm;
+          let newElement = node.firstChild;
+          productList.appendChild(newElement);
+        })
+    } catch (error) {
+        console.error(error);
+    }
+
+    {% endif %}
+  }
+</script>
+{% schema %}
+{
+"name": "Wishlist",
+"target": "body",
+"settings": []
+}
+{% endschema %}
