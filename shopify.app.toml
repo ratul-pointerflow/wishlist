@@ -3,7 +3,7 @@
 client_id = "3310953cca1241496771620a0e75969f"
 name = "Wishlist"
 handle = "wishlist-486"
-application_url = "https://speak-coastal-menus-extra.trycloudflare.com"
+application_url = "https://wishlist-oehk.onrender.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://speak-coastal-menus-extra.trycloudflare.com/auth/callback",
-  "https://speak-coastal-menus-extra.trycloudflare.com/auth/shopify/callback",
-  "https://speak-coastal-menus-extra.trycloudflare.com/api/auth/callback"
+  "https://wishlist-oehk.onrender.com/auth/callback",
+  "https://wishlist-oehk.onrender.com/auth/shopify/callback",
+  "https://wishlist-oehk.onrender.com/api/auth/callback"
 ]
 
 [webhooks]
