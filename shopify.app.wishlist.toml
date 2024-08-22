@@ -3,7 +3,7 @@
 client_id = "13f3c2657b60a8e62026079ead8a0751"
 name = "wishlist"
 handle = "wishlist-533"
-application_url = "https://wisdom-organize-apparatus-cologne.trycloudflare.com"
+application_url = "https://wishlist-oehk.onrender.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://wisdom-organize-apparatus-cologne.trycloudflare.com/auth/callback",
-  "https://wisdom-organize-apparatus-cologne.trycloudflare.com/auth/shopify/callback",
-  "https://wisdom-organize-apparatus-cologne.trycloudflare.com/api/auth/callback"
+  "https://wishlist-oehk.onrender.com/auth/callback",
+  "https://wishlist-oehk.onrender.com/auth/shopify/callback",
+  "https://wishlist-oehk.onrender.com/api/auth/callback"
 ]
 
 [webhooks]
