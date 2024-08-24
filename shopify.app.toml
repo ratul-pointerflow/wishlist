@@ -7,7 +7,7 @@ application_url = "https://wishlist-oehk.onrender.com"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = false
+automatically_update_urls_on_dev = true
 dev_store_url = "coffaia.myshopify.com"
 include_config_on_deploy = true
 
