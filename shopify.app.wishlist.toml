@@ -7,7 +7,7 @@ application_url = "https://wishlist-oehk.onrender.com"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = true
+automatically_update_urls_on_dev = false
 dev_store_url = "appcarto.myshopify.com"
 include_config_on_deploy = true
 

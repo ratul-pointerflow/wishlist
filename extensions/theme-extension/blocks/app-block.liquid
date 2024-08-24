@@ -131,8 +131,7 @@ window.addEventListener("load", (event) => {
                 openCart();
             })
             button.classList.add('added');
-
-            
+            updateCart();
         }
     });
 
@@ -150,6 +149,12 @@ window.addEventListener("load", (event) => {
             console.error(error);
         }
     }
+
+    {% else %}
+
+    button.addEventListener('click', function(){
+        alert("Please login first")
+    });
 
     {% endif %}
 });
